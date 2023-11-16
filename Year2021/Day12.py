@@ -1,7 +1,4 @@
 import itertools
-from collections import Counter
-
-import numpy as np
 
 
 def part1():
@@ -21,7 +18,6 @@ def part1():
         string_list = dict()
         search(caves, [c for c in caves if c.name == "start"][0], string_list)
         print(len(string_list))
-
 
 
 def search(caves, start, string_list, build_string=","):

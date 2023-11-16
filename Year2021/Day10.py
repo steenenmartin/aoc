@@ -1,6 +1,4 @@
-import numpy as np
-import math
-import pipe
+
 
 def part1():
     with open("Input/input10.txt") as fp:

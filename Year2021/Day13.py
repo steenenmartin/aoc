@@ -1,11 +1,7 @@
-import itertools
-from collections import Counter
-
 import numpy as np
 
 
 def part1():
-
     with open("Input/input13.txt") as fp:
         coords = []
         folds = []

@@ -1,8 +1,3 @@
-import heapq
-import math
-from collections import defaultdict
-
-import numpy as np
 
 
 def part1():
@@ -36,6 +31,7 @@ def part1():
     packet = Packet(binary_input)
     read_packet(packet)
     print(packet.get_total_version_id() + packet.version)
+
 
 def read_packet(packet, upper_packet=None):
     if all(ss == "0" for ss in packet.s):

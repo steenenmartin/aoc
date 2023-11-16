@@ -18,7 +18,6 @@ def part1():
         print(max(sums))
 
 
-
 def part2():
     elves = {}
     with open("./Year2022/Input/input1.txt") as f:

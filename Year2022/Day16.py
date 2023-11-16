@@ -1,8 +1,6 @@
 import heapq
 import itertools
 
-from Year2021.Day11 import flash
-
 
 def calculate_distances(graph, starting_vertex):
     distances = {vertex: 1e999 for vertex in graph}
@@ -45,7 +43,6 @@ def part1():
             flow_rates[valve] = int(l1.split(" ")[4].strip("rate=").strip(";"))
             l2 = l2.replace(",", "")
             tunnels[valve] = l2.strip(",").split(" ")[1:]
-    distances, paths = calculate_distances(tunnels, "AA")
 
     non_zero_valves = [k for k, v in flow_rates.items() if v != 0]
     permutations = [p for p in itertools.permutations(non_zero_valves, len(non_zero_valves))]
@@ -65,7 +62,6 @@ def part1():
                 if current == goal:
                     goal = permutation.pop()
                 current = paths[goal].pop()
-
 
 
 if __name__ == '__main__':

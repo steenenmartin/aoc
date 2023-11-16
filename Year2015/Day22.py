@@ -1,10 +1,13 @@
 import random
 
-spells = {'mm':53,
-          'drain':73,
-          'shield':113,
-          'poison':173,
-          'recharge':229}
+spells = {
+    'mm': 53,
+    'drain': 73,
+    'shield': 113,
+    'poison': 173,
+    'recharge': 229
+}
+
 
 def fight(mode):
     boss = 55
@@ -76,6 +79,7 @@ def fight(mode):
             return False, 0
         elif boss <= 0:
             return True, spent
+
 
 if __name__  == "__main__":
     optimum = 100000

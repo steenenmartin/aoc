@@ -1,5 +1,3 @@
-import json
-import re
 from itertools import permutations
 
 

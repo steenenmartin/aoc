@@ -1,5 +1,6 @@
 from itertools import combinations
 
+
 def part1():
     password = "hepxxzaa"
 

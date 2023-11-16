@@ -1,4 +1,4 @@
-import numpy as np
+
 
 def part1():
     sensors = []
@@ -79,6 +79,7 @@ def part2():
 
                 if dict_add(ss):
                     print(4000000 * ss[0] + ss[1])
+
 
 if __name__ == "__main__":
     part1()

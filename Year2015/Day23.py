@@ -5,6 +5,7 @@ with open("./Input/input23.txt") as fp:
 
 instrs = [x for x in re.findall('^(\w+) (\S+)(?:, (\S+))?$', input, re.M)]
 
+
 def day23(a, b):
     m = {
         'a': a,
@@ -29,6 +30,7 @@ def day23(a, b):
                 i += int(f) - 1
         i += 1
     return m
+
 
 print(day23(0, 0))
 print(day23(1, 0))

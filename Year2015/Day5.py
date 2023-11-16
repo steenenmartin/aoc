@@ -1,4 +1,4 @@
-import numpy as np
+
 
 def part1():
     with open("./Year2015/Input/input5.txt") as fp:
@@ -42,9 +42,7 @@ def part2():
                     repeating_pair = True
 
                 prev_pair = pair
-
                 pairs.add(pair)
-
 
             if i >= 2 and not divided_repeat:
                 s1 = input[i-2:i-1]

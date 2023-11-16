@@ -1,5 +1,6 @@
 import hashlib
 
+
 def part1():
     n_zeros = 6
     input = "bgvyzdsv"

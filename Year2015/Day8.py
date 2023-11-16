@@ -1,5 +1,6 @@
 import re
 
+
 def part1():
     with open("./Year2015/Input/input8.txt") as fp:
         input = [x.strip("\n") for x in fp.readlines()]
@@ -18,6 +19,7 @@ def part1():
         string_characters += len(string[1:-1])
 
     print(code_characters - string_characters)
+
 
 def part2():
     with open("./Year2015/Input/input8.txt") as fp:
@@ -48,8 +50,6 @@ def part2():
         x1 = re.findall(pattern1, string=string)
         string = re.sub(pattern1, string=string, repl="")
         length += len(x1) * 3
-
-
 
         if "\\" in string:
             print("h")

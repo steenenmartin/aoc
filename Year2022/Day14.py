@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def part1():
     with open("./Input/input14.txt") as f:
         walls = set()

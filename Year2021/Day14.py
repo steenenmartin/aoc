@@ -1,8 +1,4 @@
-import itertools
 from collections import Counter
-
-import memoize as memoize
-import numpy as np
 
 
 def part1():
@@ -72,6 +68,7 @@ def part2():
 
     print(max(count_dict.values()) - min(count_dict.values()))
 
+
 class Memoize:
     def __init__(self, fn):
         self.fn = fn
@@ -81,6 +78,7 @@ class Memoize:
         if args not in self.memo:
             self.memo[args] = self.fn(*args)
         return self.memo[args]
+
 
 @Memoize
 def freq_map(depth, left, right):

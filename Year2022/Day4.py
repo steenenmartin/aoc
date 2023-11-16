@@ -12,7 +12,6 @@ def part1():
         print(sum)
 
 
-
 def part2():
     with open("./Input/input4.txt") as f:
         sum = 0

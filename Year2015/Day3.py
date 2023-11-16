@@ -1,4 +1,4 @@
-import numpy as np
+
 
 def part1():
     with open("./Year2015/Input/input3.txt") as fp:

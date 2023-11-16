@@ -1,6 +1,4 @@
-import numpy as np
-import math
-import pipe
+
 
 def part1():
     with open("Input/input9.txt") as fp:
@@ -19,6 +17,7 @@ def part1():
                                 score += 1 + value
 
     print(score)
+
 
 def part2():
     with open("Input/input9.txt") as fp:
@@ -61,11 +60,13 @@ def part2():
     basin_size = list(reversed(sorted(basin_size)))
     print(basin_size[0] * basin_size[1] * basin_size[2])
 
+
 def try_get(input, up, right, i, j):
     if not 0 <= i + up < len(input[i]) or not 0 <= j + right < len(input[0]):
         return 10
 
     return int(input[i + up][j + right])
+
 
 def try_get2(input, up, right, i, j):
     if not 0 <= i + up < len(input[i]) or not 0 <= j + right < len(input[0]):

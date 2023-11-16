@@ -1,6 +1,3 @@
-import json
-import re
-from itertools import permutations
 
 
 def part1(part_2=False):

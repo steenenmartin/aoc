@@ -1,10 +1,9 @@
-day = 24
-
 from functools import reduce
 from itertools import combinations
 from operator import mul
 
 wts = [int(x) for x in open("./Input/input24.txt").read().split('\n')]
+
 
 def day24(num_groups):
     group_size = sum(wts) // num_groups

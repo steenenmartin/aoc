@@ -1,11 +1,9 @@
-import numpy as np
-import math
-import pipe
+
+
 
 def part1():
     with open("Input/input8.txt") as fp:
         input = fp.readlines()
-        entries = [x.split(" | ")[0].split(" ") for x in input]
         outputs = [x.split(" | ")[1].strip("\n").split(" ") for x in input]
 
     signals_1478 = []
@@ -16,7 +14,6 @@ def part1():
                 signals_1478.append(digit)
 
     print(len(signals_1478))
-
 
 
 def part2():
@@ -106,9 +103,6 @@ def part2():
         ss += int(string_s)
 
     print(ss)
-
-
-
 
 
 def deduce_digit(signal):

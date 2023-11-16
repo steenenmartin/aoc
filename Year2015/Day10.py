@@ -1,9 +1,4 @@
-import heapq
-import itertools
-import math
-from collections import defaultdict
 
-import numpy as np
 
 def part1():
     input = "1113222113"

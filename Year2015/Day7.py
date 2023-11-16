@@ -1,20 +1,8 @@
-import numpy as np
+
 
 def part1():
     with open("./Year2015/Input/input7.txt") as fp:
         input = [x.strip("\n").split(" ") for x in fp.readlines()]
-
-#     input = """123 -> x
-# 456 -> y
-# x AND y -> d
-# x OR y -> e
-# x LSHIFT 2 -> f
-# y RSHIFT 2 -> g
-# NOT x -> h
-# NOT y -> i"""
-#
-#     input = input.split("\n")
-#     input = [x.split(" ") for x in input]
 
     def bit_not(n, numbits=16):
         return (1 << numbits) - 1 - n

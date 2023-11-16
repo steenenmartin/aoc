@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def part1():
     with open("./Year2015/Input/input6.txt") as fp:
         inputs = [x.strip("\n").split(" ") for x in fp.readlines()]
