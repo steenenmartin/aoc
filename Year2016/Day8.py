@@ -3,7 +3,7 @@ import numpy as np
 
 
 def part1():
-    with open(".\input8.txt") as f:
+    with open(".\Input\input8.txt") as f:
         input = f.readlines()
 
     rows = 6
