@@ -49,8 +49,8 @@ def part1():
     for game in games:
         if any(draw for draw in game.draws if any(cube for cube in draw.cubes if cube.number > constraints[cube.color])):
             continue
-        else:
-            id_sum += game.id
+
+        id_sum += game.id
 
     print(id_sum)
 
