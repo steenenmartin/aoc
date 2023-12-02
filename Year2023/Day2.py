@@ -56,14 +56,14 @@ def part1():
 
     power_sum = 0
     for game in games:
-        max = {"red": 0, "green": 0, "blue": 0}
+        max_cubes = {"red": 0, "green": 0, "blue": 0}
         for draw in game.draws:
             for cube in draw.cubes:
-                if cube.number > max[cube.color]:
-                    max[cube.color] = cube.number
+                max_cubes[cube.color] = max(max_cubes[cube.color], cube.number)
+
         power = 1
-        for color in max:
-            power *= max[color]
+        for color in max_cubes:
+            power *= max_cubes[color]
 
         power_sum += power
 
