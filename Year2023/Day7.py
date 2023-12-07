@@ -1015,27 +1015,24 @@ def solve(card_strength, replace_J):
         if hand in cache:
             return cache[hand]
         
-        max_strength = 0
-        for val in card_strength:
-            new_hand = hand.replace("J", val) if replace_J else hand            
-            hand_set = set(new_hand)
-            
+        def inner_calculate(_hand):
+            hand_set = set(_hand)
             if len(hand_set) == 1:
                 # Five of a kind
                 strength = 7
-            elif len(hand_set) == 2 and any(s for s in hand_set if sum(1 for ss in new_hand if ss == s) == 4):
+            elif len(hand_set) == 2 and any(s for s in hand_set if sum(1 for ss in _hand if ss == s) == 4):
                 # Four of a kind
                 strength = 6
-            elif len(hand_set) == 2 and any(s for s in hand_set if sum(1 for ss in new_hand if ss == s) == 3):
+            elif len(hand_set) == 2 and any(s for s in hand_set if sum(1 for ss in _hand if ss == s) == 3):
                 # Full house
                 strength = 5
-            elif len(hand_set) == 3 and any(s for s in hand_set if sum(1 for ss in new_hand if ss == s) == 3):
+            elif len(hand_set) == 3 and any(s for s in hand_set if sum(1 for ss in _hand if ss == s) == 3):
                 # Three of a kind
                 strength = 4
-            elif len(hand_set) == 3 and sum(1 for s in hand_set if sum(1 for ss in new_hand if ss == s) == 2) == 2:
+            elif len(hand_set) == 3 and sum(1 for s in hand_set if sum(1 for ss in _hand if ss == s) == 2) == 2:
                 # Two pair
                 strength = 3
-            elif len(hand_set) == 4 and sum(1 for s in hand_set if sum(1 for ss in new_hand if ss == s) == 2) == 1:
+            elif len(hand_set) == 4 and sum(1 for s in hand_set if sum(1 for ss in _hand if ss == s) == 2) == 1:
                 # One pair
                 strength = 2
             elif len(hand_set) == 5:
@@ -1044,10 +1041,15 @@ def solve(card_strength, replace_J):
             else:
                 raise NotImplementedError()
             
-            if strength > max_strength:
-                max_strength = strength
-            
-            if not replace_J or not any (s for s in hand if s == "J") or max_strength == 7:
+            return strength
+        
+        if not replace_J:
+            return inner_calculate(hand)
+        
+        max_strength = 0
+        for val in card_strength:
+            max_strength = max(inner_calculate(hand.replace("J", val)), max_strength)            
+            if not any (s for s in hand if s == "J") or max_strength == 7:
                 break
                 
         cache[hand] = max_strength
