@@ -1064,27 +1064,18 @@ def solve(card_strength, replace_J):
         raise NotImplementedError()
         
     ranked_hands = []
-    for i, hand in enumerate(hands_and_bids):
-        for j, h in enumerate(ranked_hands):
-            if is_stronger(hand, h):
-                ranked_hands.insert(j, hand)
+    for i, this in enumerate(hands_and_bids):
+        for j, other in enumerate(ranked_hands):
+            if is_stronger(this, other):
+                ranked_hands.insert(j, this)
                 break
         else:
-            ranked_hands.insert(-1, hand)
-    
-    initial = ranked_hands.pop()
-    for j, h in enumerate(ranked_hands):
-        if is_stronger(initial, h):
-            ranked_hands.insert(j, initial)
-            break
-    else:
-        ranked_hands.append(initial)
+            ranked_hands.append(this)
     
     print(sum((i + 1) * hands_and_bids[hand] for i, hand in enumerate(reversed(ranked_hands))))
   
     
-if __name__ == "__main__":
-    
+if __name__ == "__main__":    
     card_strength = {
         "2": 1,
         "3": 2,
@@ -1099,10 +1090,8 @@ if __name__ == "__main__":
         "Q": 11,
         "K": 12,
         "A": 13,
-    }
-        
+    }        
     solve(card_strength, False)
     
-    card_strength["J"] = 0
-    
+    card_strength["J"] = 0    
     solve(card_strength, True)
