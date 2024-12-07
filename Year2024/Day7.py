@@ -13,10 +13,14 @@ equations = [(int(l.split(":")[0]), [int(ll) for ll in l.split(":")[1].split()])
 
 
 def backtrack(idx, cur_res, use_concat=False):
+    if cur_res > target:
+        return
+
     if idx == len(numbers):
         if cur_res == target:
             res.append(cur_res)
         return
+
     backtrack(idx + 1, cur_res + numbers[idx], use_concat)
     backtrack(idx + 1, cur_res * numbers[idx], use_concat)
 
