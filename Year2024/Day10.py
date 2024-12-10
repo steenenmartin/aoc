@@ -20,7 +20,7 @@ for r in range(R):
             zeros.append((r, c, 0))
 
 
-def dfs(G, v, exclude_discovered):
+def dfs(v, exclude_discovered):
     r, c, h = v
     discovered.append(v)
 
@@ -32,7 +32,7 @@ def dfs(G, v, exclude_discovered):
         rr, cc = r + dr, c + dc
         w = (rr, cc, h+1)
         if 0 <= rr < R and 0 <= cc < C and G[rr][cc] == h + 1 and (exclude_discovered or w not in discovered):
-            res += dfs(G, w, exclude_discovered)
+            res += dfs(w, exclude_discovered)
 
     return res
 
@@ -41,6 +41,6 @@ for xclude_discovered in [False, True]:
     ans = 0
     for z in zeros:
         discovered = []
-        ans += dfs(G, z, exclude_discovered=xclude_discovered)
+        ans += dfs(z, exclude_discovered=xclude_discovered)
 
     print(ans)
