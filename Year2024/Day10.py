@@ -1,4 +1,3 @@
-from collections import defaultdict
 
 inpt = """89010123
 78121874
@@ -31,13 +30,13 @@ def dfs(v, exclude_discovered):
     for dr, dc in [(-1, 0), (1,0), (0, 1), (0, -1)]:
         rr, cc = r + dr, c + dc
         w = (rr, cc, h+1)
-        if 0 <= rr < R and 0 <= cc < C and G[rr][cc] == h + 1 and (exclude_discovered or w not in discovered):
+        if 0 <= rr < R and 0 <= cc < C and G[rr][cc] == h + 1 and (not exclude_discovered or w not in discovered):
             res += dfs(w, exclude_discovered)
 
     return res
 
 
-for xclude_discovered in [False, True]:
+for xclude_discovered in [True, False]:
     ans = 0
     for z in zeros:
         discovered = []
