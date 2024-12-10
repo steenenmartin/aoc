@@ -1,46 +1,58 @@
-from collections import defaultdict
 
-inpt = """89010123
-78121874
-87430965
-96549874
-45678903
-32019012
-01329801
-10456732"""
-
-G = [[int(c) for c in l] for l in inpt.split()]
-R = len(G)
-C = len(G[0])
-
-zeros = []
-for r in range(R):
-    for c in range(C):
-        if G[r][c] == 0:
-            zeros.append((r, c, 0))
+inpt = "2333133121414131402"
 
 
-def dfs(G, v, exclude_discovered):
-    r, c, h = v
-    discovered.append(v)
+def generate_file_system(max_len_one):
+    space = False
+    file_system = []
+    pos = 0
+    id = 0
+    for c in inpt:
+        v = int(c)
+        if max_len_one:
+            for i in range(v):
+                file_system.append((pos, 1, id if not space else -1))
+                pos += 1
+        else:
+            file_system.append((pos, v, id if not space else -1))
+            pos += v
+        if space:
+            id += 1
+        space = not space
+    return file_system
 
-    if h == 9:
-        return 1
 
-    res = 0
-    for dr, dc in [(-1, 0), (1,0), (0, 1), (0, -1)]:
-        rr, cc = r + dr, c + dc
-        w = (rr, cc, h+1)
-        if 0 <= rr < R and 0 <= cc < C and G[rr][cc] == h + 1 and (exclude_discovered or w not in discovered):
-            res += dfs(G, w, exclude_discovered)
+def checksum(file_system):
+    for i in range(len(file_system)):
+        f = file_system[-(i+1)]
+        if f[2] != -1:
+            for j in range(len(file_system)):
+                s = file_system[j]
+                if s[0] > f[0]:
+                    continue
+                if s[1] < f[1]:
+                    continue
+                if s[2] == -1:
+                    if s[1] == f[1]:
+                        file_system[j] = (s[0], f[1], f[2])
+                        file_system[-(i+1)] = (f[0], s[1], s[2])
+                        break
+                    else:
+                        d = s[1] - f[1]
+                        file_system[j] = (s[0], f[1], f[2])
+                        file_system.insert(j+1, (s[0] + f[1], d, -1))
+                        file_system[-(i+1)] = (f[0], f[1], -1)
+                        break
+    s = 0
+    for f in file_system:
+        if f[2] == -1:
+            continue
+        for i in range(f[1]):
+            s += (f[0] + i) * f[2]
 
-    return res
+    return s
 
 
-for xclude_discovered in [False, True]:
-    ans = 0
-    for z in zeros:
-        discovered = []
-        ans += dfs(G, z, exclude_discovered=xclude_discovered)
+print(checksum(generate_file_system(True)))
+print(checksum(generate_file_system(False)))
 
-    print(ans)
