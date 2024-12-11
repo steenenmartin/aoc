@@ -23,11 +23,7 @@ def count(stone, blinks):
     left_stone, right_stone = blink_stone(stone)
 
     if blinks == 1:
-        # Final iteration, count one or two stones
-        if right_stone is None:
-            return 1
-        else:
-            return 2
+        return 1 if right_stone is None else 2
     else:
         res = count(left_stone, blinks - 1)
         if right_stone is not None:
