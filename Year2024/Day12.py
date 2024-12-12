@@ -16,40 +16,48 @@ C = len(G[0])
 d = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
 
-def explore_garden(v):
-    r, c = v
-    discovered.append(v)
+# Recursively explore garden which contains a plant 'p'
+def explore_garden(p):
+    r, c = p
+    discovered.append(p)
 
     for i in range(len(d)):
         dr, dc = d[i]
-        wr, wc = r + dr, c + dc
+        pr, pc = r + dr, c + dc
 
-        if 0 <= wr < R and 0 <= wc < C and G[wr][wc] == G[r][c] and (wr, wc) not in discovered:
-            explore_garden((wr, wc))
+        if 0 <= pr < R and 0 <= pc < C and G[pr][pc] == G[r][c] and (pr, pc) not in discovered:
+            explore_garden((pr, pc))
 
-        elif (wr, wc) not in discovered:
-            fences.append((wr, wc, i))
+        elif (pr, pc) not in discovered:
+            # If pr, pc is not added to this garden, it is consireded a fence.
+            # The direction 'i' we were looking in is stored as well in order to enable identification entire fence sides in part 2
+            fences.append((pr, pc, i))
 
 
-regions = []
+gardens = []
 p1 = 0
 p2 = 0
+
+# Loop through all plants
 for r in range(R):
     for c in range(C):
-        v = (r, c)
+        plant = (r, c)
 
-        if any(region for region in regions if (r, c) in region):
+        # If garden is already explored, continue
+        if any(garden for garden in gardens if (r, c) in garden):
             continue
 
         discovered = []
         fences = []
-        explore_garden(v)
-        regions.append(discovered)
-        fences = sorted(fences)
+        explore_garden(plant)
+
+        # Store discovered plants as a garden in order for the continue above to work
+        gardens.append(discovered)
 
         p1 += len(fences) * len(discovered)
 
-        def get_side_fences(f):
+        # Recursively explore same side fences to a fence 'f'
+        def same_side_fences(f):
             r, c, i = f
             side_fences.append(f)
 
@@ -58,13 +66,14 @@ for r in range(R):
                 w = (wr, wc, i)
 
                 if w in fences and w not in side_fences:
-                    get_side_fences(w)
+                    same_side_fences(w)
 
         sides = 0
         while fences:
+            # Pops a fence, removes same side fences and count sides one up
             fence = fences.pop()
             side_fences = []
-            get_side_fences(fence)
+            same_side_fences(fence)
             for f in side_fences:
                 if f in fences:
                     fences.remove(f)
