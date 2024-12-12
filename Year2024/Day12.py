@@ -29,7 +29,7 @@ def explore_garden(p):
             explore_garden((pr, pc))
 
         elif (pr, pc) not in discovered:
-            # If pr, pc is not added to this garden, it is consireded a fence.
+            # If pr, pc is not added to this garden, it is considered a fence.
             # The direction 'i' we were looking in is stored as well in order to enable identification entire fence sides in part 2
             fences.append((pr, pc, i))
 
@@ -62,8 +62,8 @@ for r in range(R):
             side_fences.append(f)
 
             for dr, dc in d:
-                wr, wc = r + dr, c + dc
-                w = (wr, wc, i)
+                fr, fc = r + dr, c + dc
+                w = (fr, fc, i)
 
                 if w in fences and w not in side_fences:
                     same_side_fences(w)
@@ -83,5 +83,3 @@ for r in range(R):
 
 print(p1)
 print(p2)
-
-
