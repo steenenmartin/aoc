@@ -63,10 +63,10 @@ for r in range(R):
 
             for dr, dc in d:
                 fr, fc = r + dr, c + dc
-                w = (fr, fc, i)
+                ff = (fr, fc, i)
 
-                if w in fences and w not in side_fences:
-                    same_side_fences(w)
+                if ff in fences and ff not in side_fences:
+                    same_side_fences(ff)
 
         sides = 0
         while fences:
