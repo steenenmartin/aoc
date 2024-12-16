@@ -1,21 +1,23 @@
 import heapq
 from collections import defaultdict
 
-inpt = """###############
-#.......#....E#
-#.#.###.#.###.#
-#.....#.#...#.#
-#.###.#####.#.#
-#.#.#.......#.#
-#.#.#####.###.#
-#...........#.#
-###.#.#####.#.#
-#...#.....#.#.#
-#.#.#.###.#.#.#
-#.....#...#.#.#
-#.###.#.#.#.#.#
-#S..#.....#...#
-###############"""
+inpt = """#################
+#...#...#...#..E#
+#.#.#.#.#.#.#.#.#
+#.#.#.#...#...#.#
+#.#.#.#.###.#.#.#
+#...#.#.#.....#.#
+#.#.#.#.#.#####.#
+#.#...#.#.#.....#
+#.#.#####.#.###.#
+#.#.#.......#...#
+#.#.###.#####.###
+#.#.#...#.....#.#
+#.#.#.#####.###.#
+#.#.#.........#.#
+#.#.#.#########.#
+#S#.............#
+#################"""
 
 G = [[c for c in l] for l in inpt.split("\n")]
 R = len(G)
@@ -24,13 +26,10 @@ C = len(G[0])
 ds = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 
 
-distances = {}
 for r in range(R):
     for c in range(C):
         if G[r][c] == "#":
             continue
-
-        distances[(r, c)] = 1e100
 
         if G[r][c] == "S":
             S = (r, c)
@@ -40,80 +39,44 @@ for r in range(R):
         if G[r][c] == "":
             G[r][c] = " "
 
+costs = {}
+paths_to_node = defaultdict(list)
+
 
 def dijkstra_pq(G, s):
-    distances[s] = 0
+    costs[(s, 1)] = 0
     pq = [(0, s, 1)]
-    predecessors = defaultdict(list)
 
     while pq:
-        current_dist, current_node, current_direction = heapq.heappop(pq)
+        current_cost, current_node, current_direction = heapq.heappop(pq)
 
-        if current_dist > distances[current_node]:
+        if current_cost > costs[(current_node, current_direction)]:
             continue
 
-        for i in range(len(ds)):
-            dr, dc = ds[i]
+        for new_direction in range(len(ds)):
+            dr, dc = ds[new_direction]
             rr, cc = current_node[0] + dr, current_node[1] + dc
-
+            turn = new_direction != current_direction
+            cost = current_cost + turn * 1000 + 1
+            new_node = (rr, cc)
             if G[rr][cc] != "#":
-                turn = i != current_direction
-                distance = current_dist + turn * 1000 + 1
+                if (new_node, new_direction) in costs:
+                    if cost < costs[(new_node, new_direction)]:
+                        costs[(new_node, new_direction)] = cost
+                        heapq.heappush(pq, (cost, (rr, cc), new_direction))
+                else:
+                    heapq.heappush(pq, (cost, (rr, cc), new_direction))
+                    costs[(new_node, new_direction)] = cost
+                if cost <= costs.get((new_node, new_direction), -1):
+                    paths_to_node[(new_node, new_direction)].extend([(current_node, current_direction)] + paths_to_node[(current_node, current_direction)])
 
-                if distance < distances[(rr, cc)]:
-                    distances[(rr, cc)] = distance
-                    heapq.heappush(pq, (distance, (rr, cc), i))
-                    predecessors[(rr, cc)] = [current_node]
-
-    return distances
-
-
-def find_all_paths_with(start, end, cost):
-    cache = {}
-
-    def dfs(directed_node, current_cost):
-        if current_cost > cost:
-            return []
-
-        node, direction = directed_node
-
-        if node == end:
-            if current_cost == cost:
-                return [[end]]
-            return []
-
-        if (node, current_cost) in cache:
-            return cache[(node, current_cost)]
-
-        paths = []
-        visited.add(node)
-        for i in range(len(ds)):
-            dr, dc = ds[i]
-            rr, cc = node[0] + dr, node[1] + dc
-            if (rr, cc) not in visited:
-                if G[rr][cc] != "#":
-                    turn = i != direction
-                    c = current_cost + turn * 1000 + 1
-                    subpaths = dfs(((rr, cc), i), c)
-                    for subpath in subpaths:
-                        paths.append([node] + subpath)
-        visited.remove(node)
-
-        cache[(node, current_cost)] = paths
-        return paths
-
-    visited = set()
-    result = dfs((start, 1), 0)
-    return result
+            if new_node == E:
+                paths_to_node[(new_node, new_direction)].append((new_node, new_direction))
+                pq.clear()
 
 
-cost_to_node = dijkstra_pq(G, S)
-print(cost_to_node[E])
+dijkstra_pq(G, S)
+print(costs[(E, 0)])
 
-shortest_paths = find_all_paths_with(S, E, cost_to_node[E])
-
-shortest_path_nodes = set()
-for path in shortest_paths:
-    shortest_path_nodes = shortest_path_nodes.union(path)
-
-print(len(shortest_path_nodes))
+all_paths_to_E = set([vv[0] for n, v in paths_to_node.items() for vv in v if n[0] == E])
+print(len(all_paths_to_E))
