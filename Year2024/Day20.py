@@ -17,7 +17,6 @@ inpt = """###############
 
 
 G = [[c for c in l] for l in inpt.split("\n")]
-
 R = len(G)
 C = len(G[0])
 
@@ -31,9 +30,7 @@ for r in range(R):
 ds = [(-1, 0), (0, 1), (1, 0), (0, -1)]
 d2s = [(-2, 0), (0, 2), (2, 0), (0, -2)]
 
-
 current = S
-
 dist_to_end = {S: 0}
 while current != E:
     r, c = current
