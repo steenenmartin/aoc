@@ -24,17 +24,15 @@ def solve(do_removals: bool):
             for c in range(C):
                 if not grid[r][c]:
                     continue
-                    
+
                 n = 0
                 for dr, dc in deltas:
+                    if 0 <= r + dr < R and 0 <= c + dc < C and grid[r + dr][c + dc]:
+                        n += 1
+
                     if n >= 4:
                         break
-
-                    if 0 <= r + dr < R and 0 <= c + dc < C:
-                        if grid[r + dr][c + dc]:
-                            n += 1
-
-                if n < 4:
+                else:
                     ans += 1
                     if do_removals:
                         grid[r][c] = False
