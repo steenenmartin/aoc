@@ -22,21 +22,23 @@ def solve(do_removals: bool):
         removed = False
         for r in range(R):
             for c in range(C):
-                if grid[r][c]:
-                    n = 0
-                    for dr, dc in deltas:
-                        if n >= 4:
-                            break
+                if not grid[r][c]:
+                    continue
+                    
+                n = 0
+                for dr, dc in deltas:
+                    if n >= 4:
+                        break
 
-                        if 0 <= r + dr < R and 0 <= c + dc < C:
-                            if grid[r + dr][c + dc]:
-                                n += 1
+                    if 0 <= r + dr < R and 0 <= c + dc < C:
+                        if grid[r + dr][c + dc]:
+                            n += 1
 
-                    if n < 4:
-                        ans += 1
-                        if do_removals:
-                            grid[r][c] = False
-                            removed = True
+                if n < 4:
+                    ans += 1
+                    if do_removals:
+                        grid[r][c] = False
+                        removed = True
 
     return ans
 
