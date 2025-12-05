@@ -13,9 +13,10 @@ inpt = """3-5
 fresh = [(int(i.split("-")[0]), int(i.split("-")[1])) for i in inpt.split("\n\n")[0].split("\n")]
 available = [(int(i.split("-")[0])) for i in inpt.split("\n\n")[1].split("\n")]
 
+# Part 1: 
+print(sum(1 for i in available if any(l <= i <= r for l, r in fresh)))
 
-print(sum(1 for i in available if any(f[0] <= i <= f[1] for f in fresh)))
-
+# Part 2
 fresh = sorted(fresh)
 interval_ranges = []
 for f in fresh:
