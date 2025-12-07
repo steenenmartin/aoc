@@ -25,23 +25,24 @@ for r in range(R):
         if grid[r][c] == "S":
             start = (r,c)
             break
-beams.append(start)
 
+beams.append(start)
 splits = 0
-while not all(b[0] == R for b in beams):
-    beam = beams.pop(0)
-    if beam[0] == R - 1 :
+while not all(r == R for (r, c) in beams):
+    r, c = beams.pop(0)
+    if r == R - 1 :
         continue
-    new_beam = (beam[0] + 1, beam[1])
-    if grid[new_beam[0]][new_beam[1]] == "^":
-        if not (new_beam[0], new_beam[1] - 1) in beams:
-            beams.append((new_beam[0], new_beam[1] - 1))
-        if not (new_beam[0], new_beam[1] + 1) in beams:
-            beams.append((new_beam[0], new_beam[1] + 1))
+
+    r += 1
+    if grid[r][c] == "^":
+        if not (r, c - 1) in beams:
+            beams.append((r, c - 1))
+        if not (r, c + 1) in beams:
+            beams.append((r, c + 1))
         splits += 1
     else:
-        if not new_beam in beams:
-            beams.append(new_beam)
+        if not (r, c) in beams:
+            beams.append((r, c))
 print(splits)
 
 cache = {}
@@ -49,17 +50,15 @@ paths = 0
 def solve(starting_point):
     if starting_point in cache:
         return cache[starting_point]
-    
-    p = starting_point
-    while grid[p[0]][p[1]] != "^":
-        p = (p[0] + 1, p[1])
-        if p[0] == R - 1:
+
+    r, c = starting_point
+    while grid[r][c] != "^":
+        r += 1
+        if r == R - 1:
             cache[starting_point] = 1
             return 1
 
-    left = solve((p[0], p[1] - 1))
-    right = solve((p[0], p[1] + 1))
-    cache[starting_point] = left + right
-    return left + right 
+    cache[starting_point] = solve((r, c - 1)) + solve((r, c + 1))
+    return cache[starting_point]
 
 print(solve(start))
