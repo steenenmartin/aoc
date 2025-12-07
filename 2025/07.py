@@ -30,23 +30,21 @@ beams.append(start)
 splits = 0
 while not all(r == R for (r, c) in beams):
     r, c = beams.pop(0)
-    if r == R - 1 :
+    if r == R - 1:
         continue
 
     r += 1
     if grid[r][c] == "^":
-        if not (r, c - 1) in beams:
-            beams.append((r, c - 1))
-        if not (r, c + 1) in beams:
-            beams.append((r, c + 1))
+        for dc in [-1, 1]:
+            if not (r, c + dc) in beams:
+                beams.append((r, c + dc))
         splits += 1
-    else:
-        if not (r, c) in beams:
-            beams.append((r, c))
+    elif (r, c) not in beams:
+        beams.append((r, c))
+
 print(splits)
 
 cache = {}
-paths = 0
 def solve(starting_point):
     if starting_point in cache:
         return cache[starting_point]
