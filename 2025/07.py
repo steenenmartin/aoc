@@ -18,15 +18,9 @@ inpt = """.......S.......
 grid = [[c for c in l] for l in inpt.splitlines()]
 R = len(grid)
 C = len(grid[0])
+[start] = [(r, c) for r in range(R) for c in range(C) if grid[r][c] == "S"]
+beams = [start]
 
-beams = []
-for r in range(R):
-    for c in range(C):
-        if grid[r][c] == "S":
-            start = (r,c)
-            break
-
-beams.append(start)
 splits = 0
 while not all(r == R for (r, c) in beams):
     r, c = beams.pop(0)
