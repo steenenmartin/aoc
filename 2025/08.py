@@ -36,6 +36,11 @@ circuits = []
 
 print_top_3_circuit_len_connections = 11
 for i, ((p, q), v) in enumerate(edges):
+    i += 1
+    if i == print_top_3_circuit_len_connections:
+        sorted_circuits = sorted(circuits, key=lambda c: len(c), reverse=True)
+        print(len(sorted_circuits[0]) * len(sorted_circuits[1]) * len(sorted_circuits[2]))
+
     if any(c for c in circuits if p in c and q in c):
         continue
 
@@ -46,11 +51,6 @@ for i, ((p, q), v) in enumerate(edges):
         [cp] = cp
     if cq:
         [cq] = cq
-
-    i += 1
-    if i == print_top_3_circuit_len_connections:
-        sorted_circuits = sorted(circuits, key=lambda c: len(c), reverse=True)
-        print(len(sorted_circuits[0]) * len(sorted_circuits[1]) * len(sorted_circuits[2]))
 
     if cp and cq and cp != cq:
         # p og q har forskellige circuits. Merge.
